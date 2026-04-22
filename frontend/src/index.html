@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K8s 3-Tier App</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+        }
+        header {
+            background: #326ce5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 { font-size: 24px; }
+        header p { font-size: 14px; margin-top: 5px; opacity: 0.85; }
+        .container { max-width: 800px; margin: 30px auto; padding: 0 20px; }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .card h2 { font-size: 18px; margin-bottom: 15px; color: #326ce5; }
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ccc;
+        }
+        .dot.green { background: #52c41a; }
+        .dot.red { background: #ff4d4f; }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        button {
+            background: #326ce5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover { background: #1a56d6; }
+        #message {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            display: none;
+        }
+        .success { background: #f6ffed; border: 1px solid #b7eb8f; color: #389e0d; }
+        .error { background: #fff2f0; border: 1px solid #ffccc7; color: #cf1322; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th { background: #f5f5f5; padding: 10px; text-align: left; border-bottom: 2px solid #eee; }
+        td { padding: 10px; border-bottom: 1px solid #eee; }
+        .badge {
+            background: #e6f4ff;
+            color: #1677ff;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>☸️ Kubernetes 3-Tier App</h1>
+        <p>Frontend → Backend → PostgreSQL | Running on minikube</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Status Card -->
+        <div class="card">
+            <h2>🔌 Service Status</h2>
+            <div class="status-row">
+                <div class="dot" id="backend-dot"></div>
+                <span id="backend-status">Checking backend...</span>
+            </div>
+            <div class="status-row">
+                <div class="dot" id="db-dot"></div>
+                <span id="db-status">Checking database...</span>
+            </div>
+        </div>
+
+        <!-- Add User Card -->
+        <div class="card">
+            <h2>➕ Add User</h2>
+            <input type="text" id="name" placeholder="Full Name" />
+            <input type="email" id="email" placeholder="Email Address" />
+            <button onclick="addUser()">Add User</button>
+            <div id="message"></div>
+        </div>
+
+        <!-- Users List Card -->
+        <div class="card">
+            <h2>👥 Users List</h2>
+            <button onclick="loadUsers()" style="margin-bottom:15px;">Refresh</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="users-table">
+                    <tr><td colspan="4" style="text-align:center;">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

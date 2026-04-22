@@ -1,0 +1,9 @@
+{
+  "name": "k8s-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for K8s 3-tier app",
+  "scripts": {
+    "build": "cp -r src/* dist/"
+  },
+  "dependencies": {}
+}
